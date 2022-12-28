@@ -80,6 +80,12 @@ main .color-list .color .color-rgb-code {
     color: inherit;
 }
 
+main .color-list .color .color-options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 main .color-list .color button {
     border-radius: 7px;
     padding: 7px;
@@ -112,6 +118,22 @@ main .color-list .color .padlock.unlocked:hover {
 main .color-list .color .padlock.locked {
     opacity: 1;
     background-image: url(assets/locked.svg);
+}
+
+main .color-list .color .delete-color {
+    background-image: url(assets/delete.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-origin: content-box;
+    background-position: center;
+    box-sizing: content-box;
+    height: 15px;
+    width: 15px;
+    opacity: .6;
+}
+
+main .color-list .color .delete-color:hover {
+    opacity: 1;
 }
 
 .invert {

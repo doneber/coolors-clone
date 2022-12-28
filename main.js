@@ -88,16 +88,24 @@ function createColorNode(colorObj) {
     rgbCodeNode.textContent = rgbColor
 
     const padlockBtnNode = colorNode.querySelector('.padlock')
+    const deleteBtnNode = colorNode.querySelector('.delete-color')
     const colorCodesNode = colorNode.querySelector('.color-codes')
-    const colorContrast = contrast(rgbColor, [0, 0, 0]) > contrast(rgbColor, [255, 255, 255]) ? 'black' : 'white'
-    if (colorContrast == 'white')
+    const isBlack = contrast(rgbColor, [0, 0, 0]) > contrast(rgbColor, [255, 255, 255])
+    if (!isBlack) {
         padlockBtnNode.classList.add('invert')
-    colorCodesNode.style.color = colorContrast
+        deleteBtnNode.classList.add('invert')
+    }
+    colorCodesNode.style.color = isBlack ? 'black' : 'white'
     if (colorObj.locked) padlockBtnNode.classList.add('locked')
-    
+
     padlockBtnNode.addEventListener('click', () => {
         colorObj.locked = !colorObj.locked
         padlockBtnNode.classList.toggle('locked')
+    })
+    deleteBtnNode.addEventListener('click', () => {
+        const indexColor = colorPalette.indexOf(colorObj)
+        colorPalette.splice(indexColor, 1)
+        update()
     })
     return colorNode
 }
