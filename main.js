@@ -1,17 +1,16 @@
 const formGenerator = document.querySelector('#form-generator')
+const defaultNumColors = 5
+let colorPalette = []
 
 init()
 
 function init() {
-    const colorGen = createRandomColor()
-    update(colorGen)
+    update()
 }
 
 formGenerator.addEventListener('submit', event => {
     event.preventDefault()
-    console.log('gi');
-    const colorGen = createRandomColor()
-    update(colorGen)
+    update()
 })
 
 function createRandomColor() {
@@ -21,19 +20,9 @@ function createRandomColor() {
     return { h, s, l }
 }
 
-function update(colorHSL) {
-    const colorNode = document.querySelector('.color')
-    const { h, s, l } = colorHSL
-    colorNode.style.backgroundColor = `hsl(${h}deg ${s}% ${l}%)`
-    const rgbCodeNode = colorNode.querySelector('.color-rgb-code')
-    const hexCodeNode = colorNode.querySelector('.color-hex-code')
-    const rgbColor = hslToRgb(h, s, l)
-    const hexColor = rgbToHex(rgbColor)
-    hexCodeNode.textContent = hexColor
-    rgbCodeNode.textContent = rgbColor
-    const colorCodesNode = colorNode.querySelector('.color-codes')
-    const colorContrast = contrast(rgbColor, [0, 0, 0]) > contrast(rgbColor, [255, 255, 255]) ? 'black' : 'white'
-    colorCodesNode.style.color = colorContrast
+function update() {
+    colorPalette = createColorPalette(colorPalette.length)
+    renderColors()
 }
 // https://www.30secondsofcode.org/js/s/hsl-to-rgb
 function hslToRgb(h, s, l) {
@@ -71,4 +60,36 @@ function contrast(rgb1, rgb2) {
     var darkest = Math.min(lum1, lum2);
     return (brightest + 0.05) /
         (darkest + 0.05);
+}
+
+function createColorPalette(num) {
+    const n = num == 0 ? defaultNumColors : num
+    const palette = []
+    for (let i = 0; i < n; i++) {
+        palette.push(createRandomColor())
+    }
+    return palette
+}
+
+function createColorNode(colorHSL) {
+    const colorTemplateNode = document.querySelector('#color-template')
+    const colorNode = colorTemplateNode.content.firstElementChild.cloneNode(true)
+    const { h, s, l } = colorHSL
+    colorNode.style.backgroundColor = `hsl(${h}deg ${s}% ${l}%)`
+    const rgbCodeNode = colorNode.querySelector('.color-rgb-code')
+    const hexCodeNode = colorNode.querySelector('.color-hex-code')
+    const rgbColor = hslToRgb(h, s, l)
+    const hexColor = rgbToHex(rgbColor)
+    hexCodeNode.textContent = hexColor
+    rgbCodeNode.textContent = rgbColor
+    const colorCodesNode = colorNode.querySelector('.color-codes')
+    const colorContrast = contrast(rgbColor, [0, 0, 0]) > contrast(rgbColor, [255, 255, 255]) ? 'black' : 'white'
+    colorCodesNode.style.color = colorContrast
+    return colorNode
+}
+
+function renderColors() {
+    const colorsContainer = document.querySelector('.color-list')
+    const colorNodes = colorPalette.map(color => createColorNode(color))
+    colorsContainer.replaceChildren(...colorNodes)
 }
