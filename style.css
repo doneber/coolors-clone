@@ -5,6 +5,11 @@
     font-family: sans-serif;
 }
 
+button {
+    border: none;
+    cursor: pointer;
+}
+
 body {
     height: 100vh;
 }
@@ -16,6 +21,27 @@ body header {
     height: 60px;
     border-bottom: 1px solid rgba(0 0 0 /.1);
 }
+
 body header a img {
     height: 18px;
+}
+
+main .color-form {
+    height: 56px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 22px;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 60px);
+}
+
+main .color-form button {
+    border-radius: 7px;
+    padding: 7px;
+
 }
