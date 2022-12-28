@@ -1,0 +1,21 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+body {
+    height: 100vh;
+}
+
+body header {
+    display: flex;
+    align-items: center;
+    padding-left: 22px;
+    height: 60px;
+    border-bottom: 1px solid rgba(0 0 0 /.1);
+}
+body header a img {
+    height: 18px;
+}
