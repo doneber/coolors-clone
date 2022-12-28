@@ -21,7 +21,7 @@ function createRandomColor() {
 }
 
 function update() {
-    colorPalette = createColorPalette(colorPalette.length)
+    createColorPalette(colorPalette.length)
     renderColors()
 }
 // https://www.30secondsofcode.org/js/s/hsl-to-rgb
@@ -66,15 +66,18 @@ function createColorPalette(num) {
     const n = num == 0 ? defaultNumColors : num
     const palette = []
     for (let i = 0; i < n; i++) {
-        palette.push(createRandomColor())
+        if (colorPalette[i]?.locked)
+            palette.push(colorPalette[i])
+        else
+            palette.push({ locked: false, color: createRandomColor() })
     }
-    return palette
+    colorPalette = palette
 }
 
-function createColorNode(colorHSL) {
+function createColorNode(colorObj) {
     const colorTemplateNode = document.querySelector('#color-template')
     const colorNode = colorTemplateNode.content.firstElementChild.cloneNode(true)
-    const { h, s, l } = colorHSL
+    const { h, s, l } = colorObj.color
     colorNode.style.backgroundColor = `hsl(${h}deg ${s}% ${l}%)`
 
     const rgbCodeNode = colorNode.querySelector('.color-rgb-code')
@@ -90,6 +93,12 @@ function createColorNode(colorHSL) {
     if (colorContrast == 'white')
         padlockBtnNode.classList.add('invert')
     colorCodesNode.style.color = colorContrast
+    if (colorObj.locked) padlockBtnNode.classList.add('locked')
+    
+    padlockBtnNode.addEventListener('click', () => {
+        colorObj.locked = !colorObj.locked
+        padlockBtnNode.classList.toggle('locked')
+    })
     return colorNode
 }
 
