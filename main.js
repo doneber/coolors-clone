@@ -23,6 +23,7 @@ function createRandomColor() {
 function update() {
     createColorPalette(colorPalette.length)
     renderColors()
+    addListenerToPlusBtns()
 }
 // https://www.30secondsofcode.org/js/s/hsl-to-rgb
 function hslToRgb(h, s, l) {
@@ -114,4 +115,24 @@ function renderColors() {
     const colorsContainer = document.querySelector('.color-list')
     const colorNodes = colorPalette.map(color => createColorNode(color))
     colorsContainer.replaceChildren(...colorNodes)
+    // Add an extra plusBtn
+    const plusBtn = document.createElement('div')
+    plusBtn.innerHTML =
+        `<div class="add-color-container">
+            <button class="add-color"></button>
+        </div>`
+    colorsContainer.appendChild(plusBtn)
+}
+
+function addListenerToPlusBtns() {
+    const colorsContainer = document.querySelector('.color-list')
+    const addColorButtons = [...colorsContainer.querySelectorAll('.add-color')]
+    colorsContainer.addEventListener('click', event => {
+        const indexAddBtn = addColorButtons.indexOf(event.target)
+        if (indexAddBtn > - 1) {
+            const newColor = { colorPalette: createRandomColor(), locked: false }
+            colorPalette.splice(indexAddBtn, 0, newColor)
+            update()
+        }
+    })
 }

@@ -136,6 +136,69 @@ main .color-list .color .delete-color:hover {
     opacity: 1;
 }
 
+main .color-list .add-color-container {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    height: 100%;
+    width: 30px;
+    transform: translate(-50%, -50%);
+}
+
+main .color-list .add-color-container:hover button {
+    opacity: 1;
+    background-color: #FFFFFF;
+}
+
+main .color-list .add-color-container .add-color {
+    background-image: url(assets/plus.svg);
+    background-size: 18px;
+    background-repeat: no-repeat;
+    background-origin: content-box;
+    background-position: center;
+    position: absolute;
+    top: 50%;
+    height: 30px;
+    width: 30px;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    /* opacity: 0; */
+    background-color: #FFFFFF;
+}
+
+main .color-list .add-color-container .add-color:hover {
+    background-color: #FFFFFF;
+    opacity: 1;
+}
+
+main .color-list .add-color-container .add-color {
+    display: block;
+    position: absolute;
+    top: 50%;
+    height: 30px;
+    width: 30px;
+    transform: translate(0, -50%);
+    border-radius: 50%;
+    opacity: 0;
+    background-color: #FFFFFF;
+}
+
+main .color-list .color:first-child .add-color-container {
+    transform: translate(0, -50%);
+}
+
+main .color-list .add-color-container:last-child {
+    position: absolute;
+    top: 50%;
+    left: auto;
+    transform: translate(-100%, -50%);
+}
+
+main .color-list .add-color-container:last-child button {
+    height: 30px;
+    width: 30px;
+}
+
 .invert {
     filter: invert(1);
 }
