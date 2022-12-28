@@ -89,3 +89,31 @@ main .color-list .color button {
 main .color-list .color button:hover {
     background-color: rgba(0 0 0 /.1);
 }
+
+main .color-list .color .padlock {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-origin: content-box;
+    background-position: center;
+    box-sizing: content-box;
+    height: 22px;
+    width: 22px;
+}
+
+main .color-list .color .padlock.unlocked {
+    opacity: .6;
+    background-image: url(assets/unlocked.svg);
+}
+
+main .color-list .color .padlock.unlocked:hover {
+    opacity: 1;
+}
+
+main .color-list .color .padlock.locked {
+    opacity: 1;
+    background-image: url(assets/locked.svg);
+}
+
+.invert {
+    filter: invert(1);
+}

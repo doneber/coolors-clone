@@ -76,14 +76,19 @@ function createColorNode(colorHSL) {
     const colorNode = colorTemplateNode.content.firstElementChild.cloneNode(true)
     const { h, s, l } = colorHSL
     colorNode.style.backgroundColor = `hsl(${h}deg ${s}% ${l}%)`
+
     const rgbCodeNode = colorNode.querySelector('.color-rgb-code')
     const hexCodeNode = colorNode.querySelector('.color-hex-code')
     const rgbColor = hslToRgb(h, s, l)
     const hexColor = rgbToHex(rgbColor)
     hexCodeNode.textContent = hexColor
     rgbCodeNode.textContent = rgbColor
+
+    const padlockBtnNode = colorNode.querySelector('.padlock')
     const colorCodesNode = colorNode.querySelector('.color-codes')
     const colorContrast = contrast(rgbColor, [0, 0, 0]) > contrast(rgbColor, [255, 255, 255]) ? 'black' : 'white'
+    if (colorContrast == 'white')
+        padlockBtnNode.classList.add('invert')
     colorCodesNode.style.color = colorContrast
     return colorNode
 }
