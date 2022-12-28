@@ -73,12 +73,19 @@ main .color-list .color .color-codes {
 main .color-list .color .color-hex-code {
     font-size: xx-large;
     letter-spacing: 1px;
+    color: inherit;
 }
+
+main .color-list .color .color-rgb-code {
+    color: inherit;
+}
+
 main .color-list .color button {
     border-radius: 7px;
     padding: 7px;
     background-color: transparent;
 }
+
 main .color-list .color button:hover {
     background-color: rgba(0 0 0 /.1);
 }
