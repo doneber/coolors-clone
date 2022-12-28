@@ -45,3 +45,40 @@ main .color-form button {
     padding: 7px;
 
 }
+
+main .color-list {
+    position: relative;
+    display: flex;
+    height: calc(100% - 56px);
+}
+
+main .color-list .color {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: center;
+    gap: 45px;
+    height: 100%;
+    width: 100%;
+    padding-bottom: 65px;
+    background-color: teal;
+}
+
+main .color-list .color .color-codes {
+    display: flex;
+    flex-direction: column;
+}
+
+main .color-list .color .color-hex-code {
+    font-size: xx-large;
+    letter-spacing: 1px;
+}
+main .color-list .color button {
+    border-radius: 7px;
+    padding: 7px;
+    background-color: transparent;
+}
+main .color-list .color button:hover {
+    background-color: rgba(0 0 0 /.1);
+}
