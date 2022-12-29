@@ -40,9 +40,7 @@ function update() {
 
 function updateUrl() {
     const url = new URL(location.href);
-    const palette = colorPalette.map(({ color }) => {
-        return rgbToHex(hslToRgb(color.h, color.s, color.l))
-    }).join('-')
+    const palette = colorPalette.map(({ color }) => color).join('-')
 
     url.searchParams.set('colors', palette);
     history.pushState(null, '', url);
@@ -64,6 +62,14 @@ function rgbToHex(rgbArr) {
         return hex.length == 1 ? "0" + hex : hex
     }
     return componentToHex(rgbArr[0]) + componentToHex(rgbArr[1]) + componentToHex(rgbArr[2]);
+}
+function hexToRgb(hexColor) {
+    const aRgbHex = hexColor.match(/.{1,2}/g);
+    return [
+        parseInt(aRgbHex[0], 16),
+        parseInt(aRgbHex[1], 16),
+        parseInt(aRgbHex[2], 16)
+    ]
 }
 
 function luminance(r, g, b) {
@@ -88,13 +94,16 @@ function contrast(rgb1, rgb2) {
 function createColorPalette(num) {
     const n = num == 0 ? defaultNumColors : num
     const palette = []
-    const s = parseInt(Math.random() * 45) + 5
-    const l = parseInt(Math.random() * 45) + 5
+    const sValue = parseInt(Math.random() * 45) + 5
+    const lValue = parseInt(Math.random() * 45) + 5
     for (let i = 0; i < n; i++) {
         if (colorPalette[i]?.locked)
             palette.push(colorPalette[i])
-        else
-            palette.push({ locked: false, color: createRandomColor(s, l) })
+        else {
+            const hslColorArr = createRandomColor(sValue, lValue)
+            const { h, s, l } = hslColorArr
+            palette.push({ locked: false, color: rgbToHex(hslToRgb(h, s, l)) })
+        }
     }
     if (!colorPalette.some(color => color.locked))
         palette.sort((a, b) => a.color.h - b.color.h)
@@ -104,13 +113,12 @@ function createColorPalette(num) {
 function createColorNode(colorObj) {
     const colorTemplateNode = document.querySelector('#color-template')
     const colorNode = colorTemplateNode.content.firstElementChild.cloneNode(true)
-    const { h, s, l } = colorObj.color
-    colorNode.style.backgroundColor = `hsl(${h}deg ${s}% ${l}%)`
+    colorNode.style.backgroundColor = '#' + colorObj.color
 
     const rgbCodeNode = colorNode.querySelector('.color-rgb-code')
     const hexCodeNode = colorNode.querySelector('.color-hex-code')
-    const rgbColor = hslToRgb(h, s, l)
-    const hexColor = rgbToHex(rgbColor)
+    const rgbColor = hexToRgb(colorObj.color)
+    const hexColor = colorObj.color
     hexCodeNode.textContent = hexColor
     rgbCodeNode.textContent = rgbColor
 
