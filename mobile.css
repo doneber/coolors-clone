@@ -1,0 +1,55 @@
+body header {
+    justify-content: center;
+}
+
+main {
+    flex-direction: column-reverse;
+}
+
+main .color-list {
+    flex-direction: column;
+}
+
+main .color-list .color {
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    padding: 0 40px;
+}
+
+main .color-list .color button.color-hex-code {
+    font-size: x-large;
+}
+
+main .color-list .color .color-options {
+    flex-direction: row-reverse;
+}
+
+main .color-list .add-color-container button.add-color {
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 1;
+}
+
+main .color-list .add-color-container {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    height: 30px;
+    width: 100%;
+    transform: translate(-50%, -50%);
+    /* background-color: indigo; */
+}
+
+main .color-list .color:first-child .add-color-container {
+    transform: translate(-50%, 25%);
+}
+
+main .color-list .add-color-container:last-child {
+    left: 0;
+    top: 100%;
+    transform: translate(0, -100%);
+}
+
+main .color-list .add-color-container:last-child button {
+    transform: translate(-50%, -75%);
+}
