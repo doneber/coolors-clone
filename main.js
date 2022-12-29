@@ -13,10 +13,10 @@ formGenerator.addEventListener('submit', event => {
     update()
 })
 
-function createRandomColor() {
+function createRandomColor(sAux, lAux) {
     const h = parseInt(Math.random() * 360)
-    const s = parseInt(Math.random() * 100)
-    const l = parseInt(Math.random() * 95) + 5
+    const s = parseInt(Math.random() * 50) + sAux
+    const l = parseInt(Math.random() * 50) + lAux
     return { h, s, l }
 }
 
@@ -66,12 +66,16 @@ function contrast(rgb1, rgb2) {
 function createColorPalette(num) {
     const n = num == 0 ? defaultNumColors : num
     const palette = []
+    const s = parseInt(Math.random() * 45) + 5
+    const l = parseInt(Math.random() * 45) + 5
     for (let i = 0; i < n; i++) {
         if (colorPalette[i]?.locked)
             palette.push(colorPalette[i])
         else
-            palette.push({ locked: false, color: createRandomColor() })
+            palette.push({ locked: false, color: createRandomColor(s, l) })
     }
+    if (!colorPalette.some(color => color.locked))
+        palette.sort((a, b) => a.color.h - b.color.h)
     colorPalette = palette
 }
 
