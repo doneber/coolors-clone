@@ -14,7 +14,15 @@ formGenerator.addEventListener('submit', event => {
     createColorPalette(colorPalette.length)
     update()
 })
-
+const shareBtn = document.querySelector('#share')
+shareBtn.addEventListener('click', () => {
+    const url = new URL(location.href)
+    navigator.clipboard.writeText(url.href)
+    document.querySelector('#copy').innerHTML = `
+    <div class="copy-container">
+        <p>Enlace copiado exitosamente!</p>
+    </div>`
+})
 function createRandomColor(sAux, lAux) {
     if (!sAux) sAux = parseInt(Math.random() * 45) + 5
     if (!lAux) lAux = parseInt(Math.random() * 45) + 5
@@ -28,6 +36,16 @@ function update() {
     renderColors()
     addListenerToPlusBtns()
     updateUrl()
+}
+
+function updateUrl() {
+    const url = new URL(location.href);
+    const palette = colorPalette.map(({ color }) => {
+        return rgbToHex(hslToRgb(color.h, color.s, color.l))
+    }).join('-')
+
+    url.searchParams.set('colors', palette);
+    history.pushState(null, '', url);
 }
 // https://www.30secondsofcode.org/js/s/hsl-to-rgb
 function hslToRgb(h, s, l) {
