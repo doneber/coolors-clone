@@ -51,7 +51,7 @@ function updateUrl() {
     url.searchParams.set('colors', palette);
     history.pushState(null, '', url);
 }
-// https://www.30secondsofcode.org/js/s/hsl-to-rgb
+
 function hslToRgb(h, s, l) {
     s /= 100
     l /= 100
@@ -147,6 +147,16 @@ function createColorNode(colorObj) {
         const indexColor = colorPalette.indexOf(colorObj)
         colorPalette.splice(indexColor, 1)
         update()
+    })
+    colorCodesNode.addEventListener('click', event => {
+        const element = event.target
+        if (element != hexCodeNode && element != rgbCodeNode)
+            return
+        navigator.clipboard.writeText(element.textContent)
+        document.querySelector('#copy').innerHTML = `
+        <div class="copy-container">
+            <p>Color copiado exitosamente!</p>
+        </div>`
     })
     return colorNode
 }
