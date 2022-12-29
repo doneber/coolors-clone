@@ -5,7 +5,13 @@ let colorPalette = []
 init()
 
 function init() {
-    createColorPalette(colorPalette.length)
+    const url = new URL(location.href)
+    if (url.searchParams.get('colors')) {
+        const colorsAux = url.searchParams.get('colors').split('-')
+        colorPalette = colorsAux.map(color => ({ color, locked: false }))
+    }
+    else
+        createColorPalette(colorPalette.length)
     update()
 }
 
@@ -58,7 +64,7 @@ function hslToRgb(h, s, l) {
 
 function rgbToHex(rgbArr) {
     const componentToHex = color => {
-        hex = color.toString(16).toUpperCase()
+        hex = color.toString(16)
         return hex.length == 1 ? "0" + hex : hex
     }
     return componentToHex(rgbArr[0]) + componentToHex(rgbArr[1]) + componentToHex(rgbArr[2]);
@@ -119,7 +125,7 @@ function createColorNode(colorObj) {
     const hexCodeNode = colorNode.querySelector('.color-hex-code')
     const rgbColor = hexToRgb(colorObj.color)
     const hexColor = colorObj.color
-    hexCodeNode.textContent = hexColor
+    hexCodeNode.textContent = hexColor.toUpperCase()
     rgbCodeNode.textContent = rgbColor
 
     const padlockBtnNode = colorNode.querySelector('.padlock')
