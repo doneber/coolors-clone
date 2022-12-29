@@ -5,15 +5,19 @@ let colorPalette = []
 init()
 
 function init() {
+    createColorPalette(colorPalette.length)
     update()
 }
 
 formGenerator.addEventListener('submit', event => {
     event.preventDefault()
+    createColorPalette(colorPalette.length)
     update()
 })
 
 function createRandomColor(sAux, lAux) {
+    if (!sAux) sAux = parseInt(Math.random() * 45) + 5
+    if (!lAux) lAux = parseInt(Math.random() * 45) + 5
     const h = parseInt(Math.random() * 360)
     const s = parseInt(Math.random() * 50) + sAux
     const l = parseInt(Math.random() * 50) + lAux
@@ -21,9 +25,9 @@ function createRandomColor(sAux, lAux) {
 }
 
 function update() {
-    createColorPalette(colorPalette.length)
     renderColors()
     addListenerToPlusBtns()
+    updateUrl()
 }
 // https://www.30secondsofcode.org/js/s/hsl-to-rgb
 function hslToRgb(h, s, l) {
@@ -134,7 +138,7 @@ function addListenerToPlusBtns() {
     colorsContainer.addEventListener('click', event => {
         const indexAddBtn = addColorButtons.indexOf(event.target)
         if (indexAddBtn > - 1) {
-            const newColor = { colorPalette: createRandomColor(), locked: false }
+            const newColor = { color: createRandomColor(), locked: false }
             colorPalette.splice(indexAddBtn, 0, newColor)
             update()
         }
